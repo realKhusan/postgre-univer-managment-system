@@ -9,10 +9,23 @@ async function getStudentsEnrolledBetween(start, end) {
     `
     SELECT s.* 
     FROM enrollments e
-      JOIN students s ON e.student_id = s.id
+    JOIN students s ON e.student_id = s.id
     WHERE e.enrollment_date BETWEEN $1 AND $2
   `,
     [start, end]
+  );
+  return res.rows;
+}
+async function getStudentsByCount(count) {
+  const res = await pool.query(
+    `
+    SELECT s.* 
+    FROM enrollments e
+    JOIN students s ON e.student_id = s.id
+    GROUP BY s.id
+    HAVING COUNT(*) >= $1
+  `,
+    [count]
   );
   return res.rows;
 }
@@ -53,4 +66,5 @@ module.exports = {
   update,
   delete: deleteById,
   getStudentsEnrolledBetween,
+  getStudentsByCount,
 };

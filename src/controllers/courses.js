@@ -16,6 +16,14 @@ async function getByInstructor(req, res, next) {
     next(err);
   }
 }
+async function getBySpecifiedNumber(req, res, next) {
+  try {
+    const courses = await model.getBySpecifiedNumber(req.params.number);
+    res.json(courses);
+  } catch (err) {
+    next(err);
+  }
+}
 async function createCourse(req, res, next) {
   try {
     const newCourse = await model.create(req.body);
@@ -48,6 +56,7 @@ async function deleteCourse(req, res, next) {
 module.exports = {
   getCourses,
   getByInstructor,
+  getBySpecifiedNumber,
   createCourse,
   updateCourse,
   deleteCourse,

@@ -17,6 +17,15 @@ async function getStudentsInRange(req, res, next) {
     next(err);
   }
 }
+async function getStudentsByCount(req, res, next) {
+  try {
+    const { count } = req.query;
+    const students = await models.getStudentsByCount(count);
+    res.json(students);
+  } catch (err) {
+    next(err);
+  }
+}
 
 const createStudent = async (req, res) => {
   try {
@@ -46,6 +55,7 @@ const deleteStudent = async (req, res) => {
 module.exports = {
   getStudents,
   getStudentsInRange,
+  getStudentsByCount,
   createStudent,
   updateStudent,
   deleteStudent,

@@ -11,6 +11,14 @@ async function getByInstructor(instructor) {
   return res.rows;
 }
 
+async function getBySpecifiedNumber(number) {
+  const res = await pool.query(
+    "SELECT * FROM courses WHERE max_students = $1",
+    [number]
+  );
+  return res.rows;
+}
+
 async function create({ name, instructor, schedule, max_students }) {
   const res = await pool.query(
     `INSERT INTO courses
@@ -48,6 +56,7 @@ async function deleteById(id) {
 module.exports = {
   getAll,
   getByInstructor,
+  getBySpecifiedNumber,
   create,
   update,
   delete: deleteById,
