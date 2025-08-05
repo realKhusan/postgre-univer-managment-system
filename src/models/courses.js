@@ -4,6 +4,12 @@ async function getAll() {
   const res = await pool.query("SELECT * FROM courses ORDER BY id");
   return res.rows;
 }
+async function getByInstructor(instructor) {
+  const res = await pool.query("SELECT * FROM courses WHERE instructor = $1", [
+    instructor,
+  ]);
+  return res.rows;
+}
 
 async function create({ name, instructor, schedule, max_students }) {
   const res = await pool.query(
@@ -41,6 +47,7 @@ async function deleteById(id) {
 
 module.exports = {
   getAll,
+  getByInstructor,
   create,
   update,
   delete: deleteById,

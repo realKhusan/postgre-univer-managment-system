@@ -8,6 +8,15 @@ const getStudents = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+async function getStudentsInRange(req, res, next) {
+  try {
+    const { start, end } = req.query;
+    const students = await models.getStudentsEnrolledBetween(start, end);
+    res.json(students);
+  } catch (err) {
+    next(err);
+  }
+}
 
 const createStudent = async (req, res) => {
   try {
@@ -36,6 +45,7 @@ const deleteStudent = async (req, res) => {
 
 module.exports = {
   getStudents,
+  getStudentsInRange,
   createStudent,
   updateStudent,
   deleteStudent,

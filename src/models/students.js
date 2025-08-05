@@ -4,6 +4,18 @@ const getAll = async function () {
   const res = await pool.query("SELECT * FROM students ORDER BY id");
   return res.rows;
 };
+async function getStudentsEnrolledBetween(start, end) {
+  const res = await pool.query(
+    `
+    SELECT s.* 
+    FROM enrollments e
+      JOIN students s ON e.student_id = s.id
+    WHERE e.enrollment_date BETWEEN $1 AND $2
+  `,
+    [start, end]
+  );
+  return res.rows;
+}
 const create = async function (student) {
   const res = await pool.query(
     `INSERT INTO students
@@ -40,4 +52,5 @@ module.exports = {
   create,
   update,
   delete: deleteById,
+  getStudentsEnrolledBetween,
 };

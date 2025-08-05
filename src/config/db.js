@@ -5,7 +5,7 @@ const pool = new pg({
   database: "university",
   host: "localhost",
   password: "1234567890",
-  port: 5432,
+  port: 1234,
 });
 
 module.exports = pool;

@@ -8,7 +8,14 @@ async function getCourses(req, res, next) {
     next(err);
   }
 }
-
+async function getByInstructor(req, res, next) {
+  try {
+    const courses = await model.getByInstructor(req.params.instructor);
+    res.json(courses);
+  } catch (err) {
+    next(err);
+  }
+}
 async function createCourse(req, res, next) {
   try {
     const newCourse = await model.create(req.body);
@@ -40,6 +47,7 @@ async function deleteCourse(req, res, next) {
 
 module.exports = {
   getCourses,
+  getByInstructor,
   createCourse,
   updateCourse,
   deleteCourse,
